@@ -48,12 +48,32 @@
             transform: translateX(-50%);
             z-index: 2;
             box-shadow: inset 1px 1px 0px #ffffff, inset -1px -1px 0px #8a8a8a;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.2s ease, filter 0.2s ease; 
             text-transform: uppercase;
+            width: 150px; /* Fixed width */
+            height: 40px; /* Fixed height */
         }
 
         .istfg:hover {
             background-color: #d0d0d0;
+            filter: brightness(1.1); /* Slightly brightens the button on hover */
+        }
+
+        .istfg:active {
+            background-color: #b0b0b0; /* Lighter color on click */
+            filter: brightness(0.9); /* Darker when clicked */
+        }
+
+        .timer {
+            position: fixed;
+            bottom: -12px; /* Adjusted to position lower */
+            left: 51.26%;
+            transform: translateX(-50%);
+            z-index: 2;
+            color: white;
+            font-size: 24px; /* Increased font size */
+            text-align: center;
+            pointer-events: none; /* Makes the timer unclickable */
         }
 
         .blurred-lines {
@@ -73,7 +93,6 @@
             pointer-events: auto;
         }
 
-        /* Hint-style message at the top of the screen */
         .hint-message {
             position: fixed;
             top: 0;
@@ -82,34 +101,42 @@
             background-color: black;
             color: white;
             text-align: center;
-            font-family: Comic Sans MS, sans-serif; /* Updated font to Comic Sans MS */
+            font-family: Comic Sans MS, sans-serif; 
             padding: 3px;
-            font-weight: normal; /* Removed extra thickness */
+            font-weight: normal; 
             font-size: 14px;
             z-index: 100;
         }
 
-        /* Badge notification styles */
         .badge-notification {
             position: fixed;
-            bottom: 20px; /* Adjusted position */
-            right: -300px; /* Start off-screen */
-            background-color: rgba(100, 100, 100, 0.9); /* Darker grey background with transparency */
+            bottom: 20px; 
+            right: -300px; 
+            background-color: rgba(100, 100, 100, 0.9); 
             border-radius: 5px;
             padding: 10px;
             z-index: 1000;
-            text-align: left; /* Align text to the left */
-            display: none; /* Hidden by default */
+            display: none; 
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            transition: right 0.5s ease; /* Smooth transition */
-            width: 250px; /* Set width for badge */
+            transition: right 0.5s ease, transform 0.2s ease; 
+            width: 250px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+        }
+
+        .badge-notification:hover {
+            transform: scale(1.05); 
         }
 
         .badge-notification img {
-            width: 40px; /* Adjust badge image size */
-            height: 40px; /* Adjust badge image size */
-            vertical-align: middle; /* Align badge image with text */
-            margin-right: 10px; /* Space between image and text */
+            width: 40px; 
+            height: 40px; 
+            margin-right: 10px; 
+        }
+
+        .badge-notification .badge-text {
+            color: white; 
         }
 
     </style>
@@ -132,6 +159,10 @@
         </a>
     </div>
 
+    <div class="timer">
+        <iframe src="https://free.timeanddate.com/countdown/i9kqqy8l/cf12/cm0/cu4/ct0/cs0/cac000/cr0/ss0/cac000/cpc000/pct/tcfbd9e8/fs100/szw320/szh135/tatSolariback%20in/tac000/tptBe%20patient%2C%20we%20are%20behind%20schedule./tpc000/mat%20/mac000/mpc000/iso2024-10-26T22:00:00" allowtransparency="true" frameborder="0" width="160" height="70"></iframe> <!-- Increased width and height -->
+    </div>
+
     <div class="blurred-lines" id="blurredLines">
         Click anywhere to continue...
     </div>
@@ -140,16 +171,17 @@
 
     <div class="hint-message" id="hintMessage">solario soon</div>
 
-    <!-- Badge Notification -->
     <div class="badge-notification" id="badgeNotification">
-        <img src="/assets/icon.png" alt="Badge"> <!-- Updated image to icon.png -->
-        <strong>Welcome!</strong><br>
-        <span>Join our discord!</span> <!-- Subtext aligned under main text -->
+        <img src="/assets/icon.png" alt="Badge">
+        <div class="badge-text">
+            <strong>Welcome!</strong><br>
+            <span>Join our discord!</span>
+        </div>
     </div>
 
     <script type="text/javascript">
         var thoughtsPlaying = false;
-        var timeOffStart = null;  // To track when the user leaves the page
+        var timeOffStart = null;  
 
         function playWattasigam() {
             thoughtsPlaying = true;
@@ -160,7 +192,7 @@
         document.getElementById("blurredLines").addEventListener("click", function() {
             this.style.display = "none";
             playVideo();
-            showBadge(); // Show badge when the page is clicked
+            showBadge(); 
         });
 
         function playVideo() {
@@ -173,42 +205,37 @@
             playWattasigam();
         }
 
-        // Function to show badge notification with animation
         function showBadge() {
             const badgeNotification = document.getElementById("badgeNotification");
-            badgeNotification.style.display = "block"; // Show the badge
-            badgeNotification.style.right = "20px"; // Move into view
+            badgeNotification.style.display = "flex"; 
+            badgeNotification.style.right = "20px"; 
             setTimeout(() => {
-                badgeNotification.style.right = "-300px"; // Move out of view after 5 seconds
+                badgeNotification.style.right = "-300px"; 
             }, 5000);
         }
 
-        // Function to hide badge notification with animation
         function hideBadge() {
             const badgeNotification = document.getElementById("badgeNotification");
-            badgeNotification.style.right = "-300px"; // Move out of view
+            badgeNotification.style.right = "-300px"; 
         }
 
-        // Add click event to the badge
         document.getElementById("badgeNotification").addEventListener("click", hideBadge);
 
-        // Track when the user leaves the page
         document.addEventListener("visibilitychange", function() {
             const video = document.getElementById("mangos-theory");
             if (document.visibilityState === "hidden") {
-                timeOffStart = new Date();  // Record the time when the tab becomes hidden
+                timeOffStart = new Date();  
             } else if (document.visibilityState === "visible") {
                 if (timeOffStart) {
-                    const timeOffEnd = new Date();  // Record when the tab becomes visible again
-                    const timeOffDuration = (timeOffEnd - timeOffStart) / 1000;  // Calculate the time off in seconds
+                    const timeOffEnd = new Date();  
+                    const timeOffDuration = (timeOffEnd - timeOffStart) / 1000;  
 
-                    // Adjust video time by the time they were gone
                     video.currentTime += timeOffDuration;
 
-                    timeOffStart = null;  // Reset timeOffStart
+                    timeOffStart = null;  
                 }
 
-                video.play();  // Play the video once they return
+                video.play();  
             }
         });
 
@@ -220,6 +247,12 @@
             hintMessage.innerText = messages[messageIndex];
             messageIndex = (messageIndex + 1) % messages.length;
         }
+
+        setInterval(changeHintMessage, 1000);
+    </script>
+
+</body>
+</html>  }
 
         setInterval(changeHintMessage, 1000);
     </script>
