@@ -189,37 +189,7 @@
             wattasigam.play();
         }
 
-        document.getElementById("blurredLines").addEventListener("click", function() {
-            this.style.display = "none";
-            playVideo();
-            showBadge(); 
-        });
-
-        function playVideo() {
-            const video = document.getElementById("mangos-theory");
-            video.play();
-        }
-
-        document.body.onclick = () => {
-            if (thoughtsPlaying) return;
-            playWattasigam();
-        }
-
-        function showBadge() {
-            const badgeNotification = document.getElementById("badgeNotification");
-            badgeNotification.style.display = "flex"; 
-            badgeNotification.style.right = "20px"; 
-            setTimeout(() => {
-                badgeNotification.style.right = "-300px"; 
-            }, 5000);
-        }
-
-        function hideBadge() {
-            const badgeNotification = document.getElementById("badgeNotification");
-            badgeNotification.style.right = "-300px"; 
-        }
-
-        document.getElementById("badgeNotification").addEventListener("click", hideBadge);
+         document.getElementById("badgeNotification").addEventListener("click", hideBadge);
 
         document.addEventListener("visibilitychange", function() {
             const video = document.getElementById("mangos-theory");
@@ -231,30 +201,12 @@
                     const timeOffDuration = (timeOffEnd - timeOffStart) / 1000;  
 
                     video.currentTime += timeOffDuration;
-
                     timeOffStart = null;  
                 }
 
                 video.play();  
             }
         });
-
-        const messages = ["solario soon", "solario soon.", "solario soon..", "solario soon..."];
-        let messageIndex = 0;
-
-        function changeHintMessage() {
-            const hintMessage = document.getElementById("hintMessage");
-            hintMessage.innerText = messages[messageIndex];
-            messageIndex = (messageIndex + 1) % messages.length;
-        }
-
-      
-    </script>
-
-</body>
-</html>  }
-
-        setInterval(changeHintMessage, 1000);
     </script>
 
 </body>
