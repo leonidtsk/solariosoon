@@ -1,4 +1,4 @@
-bbody {
+body {
     background: radial-gradient(circle,#333 10%,transparent 11%),radial-gradient(circle at bottom left,#333 5%,transparent 6%),radial-gradient(circle at bottom right,#333 5%,transparent 6%),radial-gradient(circle at top left,#333 5%,transparent 6%),radial-gradient(circle at top right,#333 5%,transparent 6%);
     background-size: 3em 3em;
     background-color: #141414
